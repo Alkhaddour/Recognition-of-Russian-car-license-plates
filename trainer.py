@@ -10,8 +10,7 @@ from utils.models_util import get_best_threshold
 
 
 def train_model(model,model_manager, train_loader, val_loader, loss_fn, optimizer, n_epochs, device):
-    train_losses =[]
-    val_losses = []
+
     model = model.to(device)
     for epoch in range(n_epochs):
         # Training

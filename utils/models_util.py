@@ -68,10 +68,9 @@ class ModelManager:
                   f'Train Loss: {train_loss:.4f}')
 
     def update_val_loss(self, val_loss, step, total_steps, epoch, num_epochs, print_freq=10):
-        if (step + 1) % print_freq == 0:
-            self.val_losses.append(val_loss.item())
-            print(f'[{datetime.now()}] -- Validation: Epoch [{epoch + 1}/{num_epochs}], '
-                  f'Step [{step + 1}/{total_steps}], Val Loss: {val_loss:.4f}')
+        self.val_losses.append(val_loss.item())
+        print(f'[{datetime.now()}] -- Validation: Epoch [{epoch + 1}/{num_epochs}], '
+              f'Step [{step + 1}/{total_steps}], Val Loss: {val_loss:.4f}')
 
     def update_model(self, model, val_loss):
         model_file_name = self.model_name + '.pkl'
