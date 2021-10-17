@@ -56,21 +56,24 @@ def train_model(model,model_manager, train_loader, val_loader, loss_fn, optimize
     return model, model_manager
 
 
-def test_model(model, test_loader, device):
+def test_model(model, test_loader, device, with_samples_id=False):
     model = model.to(device)
     model.eval()
     predictions = []
     labels = []
+    ids =[]
     with torch.no_grad():
         print(f'[{datetime.now()}] -- Testing...')
-        for _, images, lbls in tqdm(test_loader):
+        for id, images, lbls in tqdm(test_loader):
             images = images.to(device)
             prediction = model(images).detach().cpu().numpy()
             predictions += list(prediction)
             labels += list(lbls.detach().cpu().numpy())
-
+            ids += list(id)
     labels = [int(x) for x in labels]
     predictions = [np.argmax(x) for x in predictions]
+    if with_samples_id is True:
+        return labels, predictions, ids
     return labels, predictions
 
 #

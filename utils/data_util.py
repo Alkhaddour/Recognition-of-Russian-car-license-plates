@@ -40,7 +40,7 @@ class ImagesDataset(Dataset):
         return len(self.image_paths)
 
     def __getitem__(self, idx):
-        return idx, self.__get_image__(idx), self.labels[idx]
+        return self.image_paths[idx], self.__get_image__(idx), self.labels[idx]
 
 
 
