@@ -11,7 +11,7 @@ from torch.utils.data import DataLoader
 from config import transform, img_c, img_h, img_w, n_maps, default_optimizer, lr, loss_function, n_epochs, \
     device, batch_size, models_dir, dataset_meta_2, dataset_meta_1
 from models import CNN_1
-from trainer import train_model, test_model
+from train_test import train_model, test_model
 from utils.basic_utils import make_valid_path
 from utils.data_util import ImagesDataset
 from utils.display_util import plot_torch_image, plot_losses
@@ -38,7 +38,11 @@ if __name__ == "__main__":
     non_ru_ind = [i for i in range(len(lbls_train_val)) if i not in ru_indexes]
     n_splits = 10
     split_size = len(non_ru_ind) // n_splits
-    f1_scores = []
+    f1_scores_train = []
+    f1_scores_val = []
+    f1_scores_test = []
+    f1_scores_train_val_all = []
+
     for i in range(n_splits):
         # seed = random.randint(0, 100)
         # print("seed = ", seed)
@@ -79,10 +83,23 @@ if __name__ == "__main__":
         lbls_test, preds_test = test_model(model, test_loader, device)
         lbls_all_train_val, preds_all_train_val = test_model(model, all_train_val_loader, device)
 
-        print(f"F1-score train{i}: ", f1_score(lbls_train, preds_train))
-        print(f"F1-score val{i}: ", f1_score(lbls_val, preds_val))
-        print(f"F1-score test{i}: ", f1_score(lbls_test, preds_test))
-        print(f"F1-score all_train_val{i}: ", f1_score(lbls_all_train_val, preds_all_train_val))
+        # results
+        f1_socre_train = f1_score(lbls_train, preds_train)
+        f1_socre_val = f1_score(lbls_val, preds_val)
+        f1_socre_test = f1_score(lbls_test, preds_test)
+        f1_socre_all_train_val = f1_score(lbls_all_train_val, preds_all_train_val)
 
-        f1_scores.append(f1_score(lbls_test, preds_test))
-    print(f1_scores)
+        print(f"F1-score train{i}: ", f1_socre_train)
+        print(f"F1-score val{i}: ", f1_socre_val)
+        print(f"F1-score test{i}: ", f1_socre_test)
+        print(f"F1-score all_train_val{i}: ", f1_socre_all_train_val)
+
+        f1_scores_train.append(f1_socre_train)
+        f1_scores_val.append(f1_socre_val)
+        f1_scores_test.append(f1_socre_test)
+        f1_scores_train_val_all.append(f1_socre_all_train_val)
+
+    print(f"Avg F1-score train: ", np.mean(f1_scores_train))
+    print(f"Avg F1-score val: ", np.mean(f1_scores_val))
+    print(f"Avg F1-score test: ", np.mean(f1_scores_test))
+    print(f"Avg F1-score all_train_val: ", np.mean(f1_scores_train_val_all))
