@@ -2,7 +2,7 @@ import os
 
 import pandas as pd
 
-filepath = './dataset/classification/aggregated_results_by_ds__pool_28674905__2021_10_16.tsv'
+filepath = '../dataset/classification/aggregated_results_by_ds__pool_28674905__2021_10_16.tsv'
 
 data = pd.read_csv(filepath, sep='\t')
 cols = {'INPUT:img_path': 'img_path',
@@ -12,8 +12,8 @@ data.columns = list(cols.values())
 
 
 def get_name(path):
-    return os.path.join('./dataset/classification/train_unlabelled/',
-           os.path.split(path)[1])
+    return os.path.join('../dataset/classification/train_unlabelled/',
+                        os.path.split(path)[1])
 
 
 def change_label(lbl):
@@ -29,4 +29,4 @@ data['label'] = data['label'].apply(change_label)
 print(data.groupby(['label']).count())
 print(data['label'].unique())
 
-data.to_csv('./dataset/classification/train_unlabelled.csv', index=False)
+data.to_csv('../dataset/classification/train_unlabelled.csv', index=False)
