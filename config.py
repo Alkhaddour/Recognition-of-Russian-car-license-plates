@@ -5,6 +5,7 @@ from torchvision import transforms
 # paths
 dataset_meta_1 = './dataset/classification/train_labelled.csv'
 dataset_meta_2 = './dataset/classification/train_unlabelled.csv'
+val_meta = './dataset/classification/val.csv'
 prediction_path = './dataset/classification/predictions.csv'
 models_dir = './output/models/'
 # Transforms
