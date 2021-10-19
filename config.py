@@ -8,6 +8,7 @@ dataset_meta_2 = './dataset/classification/train_unlabelled.csv'
 val_meta = './dataset/classification/val.csv'
 rus_nan_meta = './dataset/classification/invalid_and_russian.csv'
 prediction_path = './dataset/classification/predictions.csv'
+prediction_path2 = './dataset/classification/predictions2.csv'
 models_dir = './output/models/'
 # Transforms
 transform = transforms.Compose(
